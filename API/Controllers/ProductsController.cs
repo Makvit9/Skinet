@@ -12,9 +12,7 @@ using Microsoft.Identity.Client;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController(IGenericRepository<Product> repo) : ControllerBase
+public class ProductsController(IGenericRepository<Product> repo) : BaseController
 {
    
     [HttpGet]
@@ -23,12 +21,8 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
     {
         var spec = new ProductSpecification(specParams);
 
-        var products = await repo.ListAsync(spec);
-        var count = await repo.CountAsync(spec);
+        return await CreatePagedResult(repo,spec,specParams.PageIndex,specParams.PageSize);
 
-        var pagination = new Pagination<Product>(specParams.PageIndex,
-        specParams.PageSize,count,products);
-        return Ok(pagination );
     }
 
     [HttpGet("{id:int}")] //api/products/id
