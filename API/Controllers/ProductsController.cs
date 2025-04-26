@@ -17,7 +17,7 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts(string? brand, string? type,string? sort)
     {
-        var spec = new ProductSpecification(brand,type);
+        var spec = new ProductSpecification(brand,type, sort);
 
         var products = await repo.ListAsync(spec);
         return Ok(products );
@@ -80,17 +80,18 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
     [HttpGet("brands")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
     {
-        // TODO: To be implemented 
-
-        return Ok();
+        
+        var spec= new BrandListSpecification();
+        
+        return Ok(await repo.ListAsync(spec));
     }
 
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
     {
-        // TODO: To be implemented 
+        var spec = new TypeListSpecification();
 
-        return Ok();
+        return Ok(await repo.ListAsync(spec));
     }
 
     private bool ProductExists(int id)
