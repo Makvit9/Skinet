@@ -16,6 +16,7 @@ public interface IGenericRepository<T> where T : BaseEntity
 
     Task<TResult?> GetEntityWithSpec<TResult>(ISpecification<T,TResult> spec);
 
+    Task<int> CountAsync(ISpecification<T> spec);
 
     void Add(T entity);
     void Update(T entity);
