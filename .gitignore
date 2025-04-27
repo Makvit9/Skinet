@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 # App Setting File 
 API/appsettings.json
+client/angular.json
