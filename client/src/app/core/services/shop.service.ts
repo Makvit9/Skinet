@@ -16,21 +16,23 @@ export class ShopService {
   brands: string[] = [];
 
 
-  getProducts(shopParam: ShopParams){
+  getProducts(shopParams: ShopParams){
     let params = new HttpParams();
 
-    if (shopParam.brands.length > 0){
-      params = params.append('brands', shopParam.brands.join(','));
+    if (shopParams.brands.length > 0){
+      params = params.append('brands', shopParams.brands.join(','));
     }
-    if (shopParam.types.length > 0){
-      params = params.append('types', shopParam.types.join(','));
-    }
-
-    if (shopParam.sort) {
-      params = params.append('sort',shopParam.sort);
+    if (shopParams.types.length > 0){
+      params = params.append('types', shopParams.types.join(','));
     }
 
-    params = params.append('pageSize', 20);
+    if (shopParams.sort) {
+      params = params.append('sort',shopParams.sort);
+    }
+
+    params = params.append('pageSize', shopParams.pageSize);
+    params = params.append('pageIndex', shopParams.pageIndex);
+
 
     return this.http.get<Pagination<Product>>(this.baseUrl + 'products', {params});
 
