@@ -12,7 +12,7 @@ using Microsoft.Identity.Client;
 
 namespace API.Controllers;
 
-public class ProductsController(IGenericRepository<Product> repo) : BaseController
+public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
 {
    
     [HttpGet]
